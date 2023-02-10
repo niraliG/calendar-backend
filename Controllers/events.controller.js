@@ -22,14 +22,16 @@ async function updateEvent(req, res) {
     const updatedEvent = await update(req.body);
     res.status(200).send(updatedEvent);
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: "Internal Server Error" });
   }
 }
 async function delEvent(req, res) {
   try {
     const deletedEvent = await deleteEvent(req.body);
-    res.status(200).send(deletedEvent);
+    res.sendStatus(200).send(deletedEvent);
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: "Internal Server Error" });
   }
 }
@@ -38,6 +40,7 @@ async function listUpcomingEvents(req, res) {
     const eventList = await upcominglist();
     res.status(200).send(eventList);
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: "Internal Server Error" });
   }
 }
