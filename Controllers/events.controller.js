@@ -4,6 +4,7 @@ async function listEvents(req, res) {
     const eventList = await list();
     res.status(200).send(eventList);
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: "Internal Server Error" });
   }
 }

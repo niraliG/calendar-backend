@@ -1,23 +1,29 @@
-
-
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-
+const fs = require("fs");
+const path = require("path");
+const Sequelize = require("sequelize");
+require("dotenv").config();
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || "development";
 // eslint-disable-next-line import/no-dynamic-require
 const config = require(`../../Configs/database.config.js`)[env];
 const db = {};
 let sequelize;
-  sequelize = new Sequelize(config)
+sequelize = new Sequelize({
+  dialect: "postgres",
+  url: process.env.DB_URL,
+  host: process.env.PGHOST,
+  username: process.env.PGUSER,
+  database: process.env.PGDATABASE,
+  password: process.env.PGPASSWORD,
+});
 
 fs.readdirSync(__dirname)
-  .filter(file => (
-    file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
-  ))
+  .filter(
+    (file) =>
+      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
+  )
   .forEach((file) => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize)
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize);
     db[model.name] = model;
   });
 
